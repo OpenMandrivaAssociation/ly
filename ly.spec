@@ -27,6 +27,9 @@ zig build
 zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe
 
 %post
+%systemd_post ly.service
+
+%postun
 %systemd_postun ly.service
 
 %preun
