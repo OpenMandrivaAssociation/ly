@@ -16,6 +16,8 @@ BuildRequires:	zig
 BuildRequires:  kernel-devel
 BuildRequires:  pkgconfig(xcb)
 
+Recommends: brightnessctl
+
 %description
 
 %prep
