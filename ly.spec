@@ -7,6 +7,7 @@ Version:	1~%{bumpver}.git%{shortcommit}
 Release:	1
 URL:		https://github.com/fairyglade/ly
 Source0:	%{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
+Source1:    ly-zig-cache.tar.gz
 Summary:	display manager with console UI
 License:	WTFPL
 Group:		Window Manager/Display Manager
@@ -18,7 +19,8 @@ BuildRequires:  pkgconfig(xcb)
 %description
 
 %prep
-%autosetup -n %{name}-%{commit} -p1
+%autosetup -p0 -a 1 -n %{name}-%{commit}
+
 
 %build
 zig build
@@ -27,9 +29,6 @@ zig build
 zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe
 
 %post
-%systemd_post ly.service
-
-%postun
 %systemd_postun ly.service
 
 %preun
