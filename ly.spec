@@ -4,7 +4,7 @@
 
 Name:		ly
 Version:	1~%{bumpver}.git%{shortcommit}
-Release:	1
+Release:	2
 URL:		https://github.com/fairyglade/ly
 Source0:	%{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
 Source1:    ly-zig-cache.tar.gz
@@ -33,6 +33,9 @@ zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=R
 
 
 %post
+%sytemd_post ly.service
+
+%postun
 %systemd_postun ly.service
 
 %preun
