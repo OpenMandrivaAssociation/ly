@@ -15,6 +15,7 @@ Group:		Window Manager/Display Manager
 BuildRequires:	zig
 BuildRequires:  kernel-devel
 BuildRequires:  pkgconfig(xcb)
+BuildRequires:  pam-devel
 
 Recommends:     brightnessctl
 
