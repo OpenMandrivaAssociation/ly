@@ -16,19 +16,20 @@ BuildRequires:	zig
 BuildRequires:  kernel-devel
 BuildRequires:  pkgconfig(xcb)
 
-Recommends: brightnessctl
+Recommends:     brightnessctl
 
 %description
 
 %prep
-%autosetup -p0 -a 1 -n %{name}-%{commit}
-
+%autosetup -n %{name}-%{commit} -p1
+tar -zxf %{SOURCE1}
 
 %build
-zig build
+zig build -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe --system "zig/p"
 
 %install
-zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe
+zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe --system "zig/p"
+
 
 %post
 %systemd_postun ly.service
