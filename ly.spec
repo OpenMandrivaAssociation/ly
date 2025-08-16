@@ -31,9 +31,9 @@ zig build -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe 
 %install
 zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe --system "zig/p"
 
-
-%post
-%sytemd_post ly.service
+# Disabled due to non critical error
+#%post
+#%sytemd_post ly.service
 
 %postun
 %systemd_postun ly.service
