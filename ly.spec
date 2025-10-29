@@ -1,13 +1,25 @@
-%global commit      a1b38188d0b43ec53250f4919fca118a82141e45
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global bumpver 1
+# Currently broken due to zig update causing errors and previous zig needs old version of llvm
+# https://codeberg.org/fairyglade/ly/issues/843
 
+#Untested changes
+
+%define commit_tag 0cf752f3b850d16283e28853bca63e994d8c5e7b
+
+%define commit_date %{nil}
+%define ver 1.2.0
 Name:		ly
-Version:	1~%{bumpver}.git%{shortcommit}
-Release:	2
-URL:		https://github.com/fairyglade/ly
-Source0:	%{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
-Source1:    ly-zig-cache.tar.gz
+Version:	%{?commit_date:%{ver}~%{commit_date}}
+Release:	1
+URL:		https://codeberg.org/fairyglade/ly
+%if "%{commit_tag}" != "%{nil}"
+Source0:    https://codeberg.org/fairyglade/ly/archive/%{commit_tag}.tar.gz#/%{name}-%{version}.tar.gz
+%else
+Source0:    https://codeberg.org/fairyglade/ly/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+%endif
+
+Source1: https://codeberg.org/fairyglade/ly/releases/download/v%{ver}/vendor.tar.zst
+
+
 Summary:	display manager with console UI
 License:	WTFPL
 Group:		Window Manager/Display Manager
@@ -22,28 +34,45 @@ Recommends:     brightnessctl
 %description
 
 %prep
-%autosetup -n %{name}-%{commit} -p1
-tar -zxf %{SOURCE1}
+%autosetup -n %{name}
+mkdir -p zig-global-cache
+tar zxf %{S:1} -C zig-global-cache --strip-components=1
 
 %build
-zig build -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe --system "zig/p"
+zig build \
+  --search-prefix /usr \
+  -Ddest_directory=%{buildroot} \
+  -Dname=ly \
+  --global-cache-dir zig-global-cache \
+  --system zig-global-cache/p \
+  -Dcpu=baseline \
+  -Doptimize=ReleaseSafe
 
 %install
-zig build installexe -Ddest_directory="%{buildroot}" -Dcpu=baseline -Doptimize=ReleaseSafe --system "zig/p"
+zig build \
+  --search-prefix /usr \
+  -Ddest_directory=%{buildroot} \
+  -Dname=ly \
+  --global-cache-dir zig-global-cache \
+  --system zig-global-cache/p \
+  -Dcpu=baseline \
+  -Doptimize=ReleaseSafe \
+  installexe
 
-# Disabled due to non critical error
-#%post
-#%sytemd_post ly.service
+# Config files (backup them)
+install -Dm644 config.ini %{buildroot}/etc/%{name}/config.ini
+install -Dm755 setup.sh %{buildroot}/etc/%{name}/setup.sh
+install -Dm644 pam.d/ly %{buildroot}/etc/pam.d/%{name}
 
-%postun
-%systemd_postun ly.service
+# Systemd service
+install -Dm644 ly.service %{buildroot}/usr/lib/systemd/system/ly.service  # Assume source has this; add if needed
 
-%preun
-%systemd_preun ly.service
 
 %files
 %license license.md
-%{_sysconfdir}/ly
-%{_sysconfdir}/pam.d
+%config(noreplace) %{_sysconfdir}/ly
+%config(noreplace) %{_sysconfdir}/pam.d
 %{_bindir}/ly
 %{_unitdir}/%{name}.service
+
+
