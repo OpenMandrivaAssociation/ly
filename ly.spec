@@ -3,10 +3,10 @@
 
 #Untested changes
 
-%define commit_tag 0cf752f3b850d16283e28853bca63e994d8c5e7b
+#define commit_tag 0cf752f3b850d16283e28853bca63e994d8c5e7b
 
 %define commit_date %{nil}
-%define ver 1.2.0
+%define ver 1.5.0.rc1
 Name:		ly
 Version:	%{?commit_date:%{ver}~%{commit_date}}
 Release:	1
@@ -14,10 +14,10 @@ URL:		https://codeberg.org/fairyglade/ly
 %if "%{commit_tag}" != "%{nil}"
 Source0:    https://codeberg.org/fairyglade/ly/archive/%{commit_tag}.tar.gz#/%{name}-%{version}.tar.gz
 %else
-Source0:    https://codeberg.org/fairyglade/ly/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:    https://codeberg.org/fairyglade/ly/archive/v1.5.0-rc1.tar.gz#/%{name}-1.5.0-rc1.tar.gz
 %endif
 
-Source1: https://codeberg.org/fairyglade/ly/releases/download/v%{ver}/vendor.tar.zst
+Source1: https://codeberg.org/fairyglade/ly/releases/download/v1.5.0-rc1/vendor.tar.zst
 
 
 Summary:	display manager with console UI
