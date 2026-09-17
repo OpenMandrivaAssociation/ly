@@ -3,7 +3,7 @@
 
 #Untested changes
 
-#define commit_tag 0cf752f3b850d16283e28853bca63e994d8c5e7b
+%define commit_tag %{nil}
 
 %define commit_date %{nil}
 %define ver 1.5.0.rc1
