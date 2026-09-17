@@ -35,8 +35,7 @@ Recommends:     brightnessctl
 
 %prep
 %autosetup -n %{name}
-mkdir -p zig-global-cache/p
-tar -xf %{S:1} -C zig-global-cache/p --strip-components=1
+tar -xf %{S:1}
 
 %build
 zig build \
