@@ -14,7 +14,7 @@ URL:		https://codeberg.org/fairyglade/ly
 %if "%{commit_tag}" != "%{nil}"
 Source0:    https://codeberg.org/fairyglade/ly/archive/%{commit_tag}.tar.gz#/%{name}-%{version}.tar.gz
 %else
-Source0:    https://codeberg.org/fairyglade/ly/archive/v1.5.0-rc1.tar.gz#/%{name}-1.5.0-rc1.tar.gz
+Source0:    https://codeberg.org/fairyglade/ly/archive/v1.5.0-rc1.tar.gz#/%{name}-v1.5.0-rc1.tar.gz
 %endif
 
 Source1: https://codeberg.org/fairyglade/ly/releases/download/v1.5.0-rc1/vendor.tar.zst
