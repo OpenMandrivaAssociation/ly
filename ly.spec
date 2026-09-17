@@ -43,7 +43,6 @@ zig build \
   --search-prefix /usr \
   -Ddest_directory=%{buildroot} \
   -Dname=ly \
-  --global-cache-dir zig-global-cache \
   --system zig-global-cache/p \
   -Dcpu=baseline \
   -Doptimize=ReleaseSafe
@@ -53,7 +52,6 @@ zig build \
   --search-prefix /usr \
   -Ddest_directory=%{buildroot} \
   -Dname=ly \
-  --global-cache-dir zig-global-cache \
   --system zig-global-cache/p \
   -Dcpu=baseline \
   -Doptimize=ReleaseSafe \
